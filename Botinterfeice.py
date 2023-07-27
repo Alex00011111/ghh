@@ -67,14 +67,14 @@ class BotInterface():
                     while saved_profiles == True:
                         self.questionnaries()
 
-                    photos_user = self.api.get_photos(workseet['id'])
+                    photos_user = self.api.get_photos(worksheet['id'])
 
                     attachment = ' '
                     for num, photo in enumerate(photos_user):
                         attachment += f'photo{photo["owner_id"]}_{photo["id"]}'
                         if num == 2:
                             break
-                    self.message_send(event.user_id, f'Встречайте {workseet["name"]} ссылка:vk.com/{workseet["id"]}', attachment=attachment)
+                    self.message_send(event.user_id, f'Встречайте {worksheet["name"]} ссылка:vk.com/{worksheet["id"]}', attachment=attachment)
                     # запись в базу данных
                     #add_user()
                 elif message == 'пока':
