@@ -19,7 +19,7 @@ class Viewed(Base):
 def add_user():
     engine = create_engine(database)
     Base.metadata.create_all(engine)
-   with Session(engine) as session:
+    with Session(engine) as session:
         to_bd = Viewed(profile_id = user_id, worksheet_id = user['id'])
         session.add(to_bd)
         session.commit()
