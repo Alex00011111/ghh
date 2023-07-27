@@ -67,12 +67,12 @@ class VKTools():
         return res
 
     def questionnaries():
-        if workseets:
-            workseet = workseets.pop()
+        if worksheets:
+            worksheet = worksheets.pop()
         else:
-            workseets = self.serch_users(self.params, self.offset)
-            workseet = workseets.pop()
-        return workseet
+            worksheets = self.serch_users(self.params, self.offset)
+            worksheet = worksheets.pop()
+        return worksheet
 
 
     def get_photos(self, user_id):
