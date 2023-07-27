@@ -4,6 +4,8 @@ from vk_api.utils import get_random_id
 from VkTools import VKTools
 from token import access_token, comunity_token
 from Viewed import add_user(), check_user()
+
+
 class BotInterface():
     def __init__(self, access_token, comunity_token):
         self.bot = vk_api.VkApi(token=comunity_token)
