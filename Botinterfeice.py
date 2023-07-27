@@ -30,9 +30,9 @@ class BotInterface():
                     self.questionnaries = self.api.questionnaries()
 
                     if self.params['age'] == None:
-                        context += str(age)
+                        context += str("age")
                     if self.params['city'] == None:
-                        context += str(city)
+                        context += str("city")
                     if context == 'age':
                         self.message_send(event.user_id, f'У вас не достаточно информации на странице, напишите пожалуйста возраст, например: 40')
                     if context == 'city':
@@ -40,22 +40,22 @@ class BotInterface():
                     if context == 'agecity':
                         self.message_send(event.user_id, f'У вас не достаточно информации на странице, напишите пожалуйста возраст и город через пробел, например: 40 Москва')
                 elif context == 'age':
-                    self.params[age] = message
+                    self.params['age'] = message
                     del(context)
                 elif context == 'city':
-                    self.params[city] = message
+                    self.params['city'] = message
                     del(context)
                 elif context == 'agecity':
                     age_city = message.split(' ')[0]
                     if age_city.isdigit() == True:
-                        self.params[age] = age_city
+                        self.params['age'] = age_city
                     else:
-                        self.params[city] = age_city
+                        self.params['city'] = age_city
                     age_city_params = message.split(' ')[1]
                     if age_city_params.isdigit() == True:
-                        self.params[age] = age_city_params
+                        self.params['age'] = age_city_params
                     else:
-                        self.params[city] = age_city_params
+                        self.params['city'] = age_city_params
                     del(context)
                 elif message == 'поиск':
                     self.message_send(event.user_id, f'Начинаем поиск')
