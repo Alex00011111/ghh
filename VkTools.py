@@ -36,7 +36,7 @@ class VKTools():
 
         sex = 1 if params['sex'] == 2 else 2
         city = params['city']
-        age = params[age]
+        age = params['age']
         age_from = age - 3
         age_to = age + 3
         relation = params['relation']
