@@ -70,7 +70,7 @@ class VKTools():
         if worksheets:
             worksheet = worksheets.pop()
         else:
-            worksheets = self.serch_users(self.params, self.offset)
+            worksheets = self.api.serch_users(self.params, self.offset)
             worksheet = worksheets.pop()
         return worksheet
 
