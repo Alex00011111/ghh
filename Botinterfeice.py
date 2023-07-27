@@ -79,7 +79,7 @@ class BotInterface():
                             break
                     self.message_send(event.user_id, f'Встречайте {worksheet["name"]} ссылка:vk.com/{worksheet["id"]}', attachment=attachment)
                     # запись в базу данных
-                    #add_user()
+                    add_user()
                 elif message == 'пока':
                     self.message_send(event.user_id, f'всего доброго')
                 else:
