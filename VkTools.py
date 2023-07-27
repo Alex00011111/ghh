@@ -66,7 +66,7 @@ class VKTools():
                            )
         return res
 
-    def questionnaries():
+    def questionnaires():
         if worksheets:
             worksheet = worksheets.pop()
         else:
