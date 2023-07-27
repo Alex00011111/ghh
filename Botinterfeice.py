@@ -11,7 +11,8 @@ class BotInterface():
         self.bot = vk_api.VkApi(token=comunity_token)
         self.api = VKTools(access_token)
         self.params = None
-
+        self.questionnaires = None
+    
     def message_send(self, user_id, message, attachment=None):
         self.bot.method('messages.send', {
                         'user_id': user_id,
@@ -29,7 +30,7 @@ class BotInterface():
                 if message == 'привет':
                     self.params = self.api.get_profile_info(event.user_id)
                     self.message_send(event.user_id, f'привет {self.params["name"]}')
-                    self.questionnaries = self.api.questionnaries()
+                    self.questionnaires = self.api.questionnaires()
 
                     if self.params['age'] == None:
                         context += str("age")
@@ -62,12 +63,12 @@ class BotInterface():
                 elif message == 'поиск':
                     self.message_send(event.user_id, f'Начинаем поиск')
 
-                    self.questionnaries()
+                    self.questionnaires()
 
                         # проверка базы данных
                     saved_profiles = check_user()
                     while saved_profiles == True:
-                        self.questionnaries()
+                        self.questionnaires()
 
                     photos_user = self.api.get_photos(worksheet['id'])
 
