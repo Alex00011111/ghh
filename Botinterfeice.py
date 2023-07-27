@@ -27,7 +27,7 @@ class BotInterface():
                 if message == 'привет':
                     self.params = self.api.get_profile_info(event.user_id)
                     self.message_send(event.user_id, f'привет {self.params["name"]}')
-                    self.questionnaries = questionnaries()
+                    self.questionnaries = self.api.questionnaries()
 
                     if self.params['age'] == None:
                         context += str(age)
