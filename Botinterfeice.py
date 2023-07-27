@@ -13,11 +13,11 @@ class BotInterface():
         self.params = None
 
     def message_send(self, user_id, message, attachment=None):
-        self.bot.method('messages.send',
-                       {'user_id': user_id,
+        self.bot.method('messages.send', {
+                        'user_id': user_id,
                         'random_id': get_random_id(),
-                        'attachment': attachment,
-                       })
+                        'attachment': attachment, }
+                        )
 
     def handler(self):
         longpull = VkLongPoll(self.bot)
