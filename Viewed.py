@@ -29,7 +29,8 @@ def add_user():
 def check_user():
     engine = create_engine(database)
     with Session(engine) as session:
-        from_bd = session.query(Viewed).filter(Viewed.profile_id == user_id, Viewed.worksheet_id == worksheet['id']).first()
+        from_bd = session.query(Viewed).filter(Viewed.profile_id == user_id, 
+                                               Viewed.worksheet_id == worksheet['id']).first()
         return True if from_bd else Fals
 
 
