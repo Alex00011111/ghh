@@ -26,9 +26,9 @@ class BotInterface():
 
         for event in longpull.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-                message = event.text.lower()
+                messages = event.text.lower()
                 context = ''
-                if message == 'привет':
+                if messages == 'привет':
                     self.params = self.api.get_profile_info(event.user_id)
                     self.message_send(event.user_id, f'привет {self.params["name"]}')
                     self.questionnaires = self.api.questionnaires()
@@ -44,24 +44,24 @@ class BotInterface():
                     if context == 'agecity':
                         self.message_send(event.user_id, f'У вас не достаточно информации на странице, напишите пожалуйста возраст и город через пробел, например: 40 Москва')
                 elif context == 'age':
-                    self.params['age'] = message
+                    self.params['age'] = messages
                     del context
                 elif context == 'city':
-                    self.params['city'] = message
+                    self.params['city'] = messages
                     del context
                 elif context == 'agecity':
-                    age_city = message.split(' ')[0]
+                    age_city = messages.split(' ')[0]
                     if age_city.isdigit() == "True":
                         self.params['age'] = age_city
                     else:
                         self.params['city'] = age_city
-                    age_city_params = message.split(' ')[1]
+                    age_city_params = messages.split(' ')[1]
                     if age_city_params.isdigit() == "True":
                         self.params['age'] = age_city_params
                     else:
                         self.params['city'] = age_city_params
                     del context
-                elif message == 'поиск':
+                elif messages == 'поиск':
                     self.message_send(event.user_id, f'Начинаем поиск')
 
                     self.questionnaires()
@@ -81,7 +81,7 @@ class BotInterface():
                     self.message_send(event.user_id, f'Встречайте {worksheet["name"]} ссылка:vk.com/{worksheet["id"]}', attachment=attachment)
                     # запись в базу данных
                     add_user()
-                elif message == 'пока':
+                elif messages == 'пока':
                     self.message_send(event.user_id, f'всего доброго')
                 else:
                     self.message_send(event.user_id, f'неизвестная команда')
