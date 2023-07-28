@@ -75,7 +75,6 @@ class VKTools():
             worksheet = worksheets.pop()
         return worksheet
 
-
     def get_photos(self, user_id):
         photos = self.api.method('photos.get',
                                  {'user_id': user_id,
