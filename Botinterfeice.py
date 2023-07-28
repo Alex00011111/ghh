@@ -44,10 +44,10 @@ class BotInterface():
                         self.message_send(event.user_id, f'У вас не достаточно информации на странице, напишите пожалуйста возраст и город через пробел, например: 40 Москва')
                 elif context == 'age':
                     self.params['age'] = message
-                    del(context)
+                    del context
                 elif context == 'city':
                     self.params['city'] = message
-                    del(context)
+                    del context
                 elif context == 'agecity':
                     age_city = message.split(' ')[0]
                     if age_city.isdigit() == "True":
@@ -59,7 +59,7 @@ class BotInterface():
                         self.params['age'] = age_city_params
                     else:
                         self.params['city'] = age_city_params
-                    del(context)
+                    del context
                 elif message == 'поиск':
                     self.message_send(event.user_id, f'Начинаем поиск')
 
