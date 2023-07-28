@@ -32,9 +32,9 @@ class BotInterface():
                     self.message_send(event.user_id, f'привет {self.params["name"]}')
                     self.questionnaires = self.api.questionnaires()
 
-                    if self.params['age'] == None:
+                    if self.params['age'] == "None":
                         context += str("age")
-                    if self.params['city'] == None:
+                    if self.params['city'] == "None":
                         context += str("city")
                     if context == 'age':
                         self.message_send(event.user_id, f'У вас не достаточно информации на странице, напишите пожалуйста возраст, например: 40')
@@ -50,12 +50,12 @@ class BotInterface():
                     del(context)
                 elif context == 'agecity':
                     age_city = message.split(' ')[0]
-                    if age_city.isdigit() == True:
+                    if age_city.isdigit() == "True":
                         self.params['age'] = age_city
                     else:
                         self.params['city'] = age_city
                     age_city_params = message.split(' ')[1]
-                    if age_city_params.isdigit() == True:
+                    if age_city_params.isdigit() == "True":
                         self.params['age'] = age_city_params
                     else:
                         self.params['city'] = age_city_params
