@@ -2,13 +2,13 @@ import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 from vk_api.utils import get_random_id
 from VkTools import VKTools
-from token import access_token, comunity_token
+from token import access_token, community_token
 from Viewed import add_user(), check_user()
 
 
 class BotInterface():
-    def __init__(self, access_token, comunity_token):
-        self.bot = vk_api.VkApi(token=comunity_token)
+    def __init__(self, access_token, community_token):
+        self.bot = vk_api.VkApi(token=community_token)
         self.api = VKTools(access_token)
         self.params = None
         self.questionnaires = None
