@@ -59,7 +59,7 @@ class VKTools():
         res = []
 
         for user in users:
-            if user['is_closed'] == False:
+            if user['is_closed'] == "False":
                 res.append({'id': user['id'],
                             'name': user['first_name'] + ' ' + user['last_name']
                             }
