@@ -66,12 +66,12 @@ class VKTools():
                            )
         return res
 
-    def questionnaires(self):
+    def questionnaires(self, params):
         worksheets = []
         if worksheets:
             worksheet = worksheets.pop()
         else:
-            worksheets = self.api.serch_users(self.params, self.offset)
+            worksheets = self.api.serch_users(params)
             worksheet = worksheets.pop()
         return worksheet
 
