@@ -28,60 +28,59 @@ class BotInterface():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
                 messages = event.text.lower()
                 context = ''
-                if messages == 'привет':
-                    self.params = self.api.get_profile_info(event.user_id)
-                    self.message_send(event.user_id, f'привет {self.params["name"]}')
-                    self.questionnaires = self.api.questionnaires()
+                if cotext == "None":
+                    if messages == 'привет':
+                        self.params = self.api.get_profile_info(event.user_id)
+                        self.message_send(event.user_id, f'привет {self.params["name"]}')
+                        self.questionnaires = self.api.questionnaires(self.params)
 
-                    if self.params['age'] == "None":
-                        context += str("age")
-                    if self.params['city'] == "None":
-                        context += str("city")
-                    if context == 'age':
-                        self.message_send(event.user_id, f'У вас не достаточно информации на странице, напишите пожалуйста возраст, например: 40')
-                    if context == 'city':
-                        self.message_send(event.user_id, f'У вас не достаточно информации на странице, напишите пожалуйста город, например: Москва')
-                    if context == 'agecity':
-                        self.message_send(event.user_id, f'У вас не достаточно информации на странице, напишите пожалуйста возраст и город через пробел, например: 40 Москва')
-                elif context == 'age':
-                    self.params['age'] = messages
-                    del context
-                elif context == 'city':
-                    self.params['city'] = messages
-                    del context
-                elif context == 'agecity':
-                    age_city = messages.split(' ')[0]
-                    if age_city.isdigit() == "True":
-                        self.params['age'] = age_city
-                    else:
-                        self.params['city'] = age_city
-                    age_city_params = messages.split(' ')[1]
-                    if age_city_params.isdigit() == "True":
-                        self.params['age'] = age_city_params
-                    else:
-                        self.params['city'] = age_city_params
-                    del context
-                elif messages == 'поиск':
-                    self.message_send(event.user_id, f'Начинаем поиск')
+                        if self.params['age'] == "None":
+                            context += str("age")
+                        if self.params['city'] == "None":
+                            context += str("city")
+                        if context == 'age':
+                            self.message_send(event.user_id, f'У вас не достаточно информации на странице, напишите пожалуйста возраст, например: 40')
+                        if context == 'city':
+                            self.message_send(event.user_id, f'У вас не достаточно информации на странице, напишите пожалуйста город, например: Москва')
+                        if context == 'agecity':
+                            self.message_send(event.user_id, f'У вас не достаточно информации на странице, напишите пожалуйста возраст и город через пробел, например: 40 Москва')
+                    elif messages == 'поиск':
+                        self.message_send(event.user_id, f'Начинаем поиск')
+                        self.questionnaires = self.api.questionnaires(self.params)
+                    # проверка базы данных
+                        saved_profiles = check_user()
+                        while saved_profiles == "True":
+                            self.questionnaires = self.api.questionnaires(self.params)
 
-                    self.questionnaires()
+                        photos_user = self.api.get_photos(self.questionnaires['id'])
 
-                        # проверка базы данных
-                    saved_profiles = check_user()
-                    while saved_profiles == True:
-                        self.questionnaires()
-
-                    photos_user = self.api.get_photos(worksheet['id'])
-
-                    attachment = ' '
-                    for num, photo in enumerate(photos_user):
-                        attachment += f'photo{photo["owner_id"]}_{photo["id"]}'
-                        if num == 2:
-                            break
-                    self.message_send(event.user_id, f'Встречайте {worksheet["name"]} ссылка:vk.com/{worksheet["id"]}', attachment=attachment)
+                        attachment = ' '
+                        for num, photo in enumerate(photos_user):
+                            attachment += f'photo{photo["owner_id"]}_{photo["id"]}'
+                            if num == 2:
+                                break
+                        self.message_send(event.user_id, f'Встречайте {self.questionnaires["name"]} ссылка:vk.com/{self.questionnaires["id"]}', attachment=attachment)
                     # запись в базу данных
-                    add_user()
-                elif messages == 'пока':
-                    self.message_send(event.user_id, f'всего доброго')
-                else:
-                    self.message_send(event.user_id, f'неизвестная команда')
+                        add_user()
+                    elif messages == 'пока':
+                        self.message_send(event.user_id, f'всего доброго')
+                    else:
+                        self.message_send(event.user_id, f'неизвестная команда')
+                else:   
+                    if context == 'age':
+                        self.params['age'] = messages
+                    elif context == 'city':
+                        self.params['city'] = messages
+                    elif context == 'agecity':
+                        age_city = messages.split(' ')[0]
+                        if age_city.isdigit() == "True":
+                            self.params['age'] = age_city
+                        else:
+                            self.params['city'] = age_city
+                        age_city_params = messages.split(' ')[1]
+                        if age_city_params.isdigit() == "True":
+                            self.params['age'] = age_city_params
+                        else:
+                            self.params['city'] = age_city_params
+                    del context
+                
