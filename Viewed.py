@@ -20,7 +20,7 @@ def add_user():
     engine = create_engine(database)
     Base.metadata.create_all(engine)
     with Session(engine) as session:
-        to_bd = Viewed(profile_id = user_id, worksheet_id = worksheet['id'])
+        to_bd = Viewed(profile_id = user_id, worksheet_id = self.questionnaires['id'])
         session.add(to_bd)
         session.commit()
 
@@ -30,7 +30,7 @@ def check_user():
     engine = create_engine(database)
     with Session(engine) as session:
         from_bd = session.query(Viewed).filter(Viewed.profile_id == user_id, 
-                                               Viewed.worksheet_id == worksheet['id']).first()
+                                               Viewed.worksheet_id == self.questionnaires['id']).first()
         return True if from_bd else False
 
 
