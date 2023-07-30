@@ -83,4 +83,9 @@ class BotInterface():
                         else:
                             self.params['city'] = age_city_params
                     del context
+
+if __name__ == '__main__':
+    bot = BotInterface(community_token, access_token)
+    bot.handler()
+    
                 
