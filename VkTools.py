@@ -66,15 +66,6 @@ class VKTools():
                            )
         return res
 
-    def questionnaires(self, params):
-        worksheets = []
-        if worksheets:
-            worksheet = worksheets.pop()
-        else:
-            worksheets = self.api.serch_users(params)
-            worksheet = worksheets.pop()
-        return worksheet
-
     def get_photos(self, user_id):
         photos = self.api.method('photos.get',
                                  {'user_id': user_id,
