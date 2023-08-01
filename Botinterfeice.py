@@ -11,7 +11,7 @@ class BotInterface():
         self.bot = vk_api.VkApi(token=community_token)
         self.api = VKTools(access_token)
         self.params = None
-        self.questionnaires = None
+        self.worksheets = []
     
     def message_send(self, user_id, message, attachment=None):
         self.bot.method('messages.send', {
@@ -32,8 +32,7 @@ class BotInterface():
                     if messages == 'привет':
                         self.params = self.api.get_profile_info(event.user_id)
                         self.message_send(event.user_id, f'привет {self.params["name"]}')
-                        self.questionnaires = self.api.questionnaires(self.params)
-
+                        
                         if self.params['age'] == "None":
                             context += str("age")
                         if self.params['city'] == "None":
@@ -46,20 +45,28 @@ class BotInterface():
                             self.message_send(event.user_id, f'У вас не достаточно информации на странице, напишите пожалуйста возраст и город через пробел, например: 40 Москва')
                     elif messages == 'поиск':
                         self.message_send(event.user_id, f'Начинаем поиск')
-                        self.questionnaires = self.api.questionnaires(self.params)
-                    # проверка базы данных
+                        if self.worksheets:
+                            worksheet = self.worksheets.pop()
+                        else:
+                            self.worksheets = self.api.serch_users(self.params)
+                            worksheet = self.worksheets.pop()
+                            # проверка базы данных
                         saved_profiles = check_user()
                         while saved_profiles == "True":
-                            self.questionnaires = self.api.questionnaires(self.params)
+                            if self.worksheets:
+                                worksheet = self.worksheets.pop()
+                            else:
+                                self.worksheets = self.api.serch_users(self.params)
+                                worksheet = self.worksheets.pop()    
 
-                        photos_user = self.api.get_photos(self.questionnaires['id'])
+                        photos_user = self.api.get_photos(worksheet['id'])
 
                         attachment = ' '
                         for num, photo in enumerate(photos_user):
                             attachment += f'photo{photo["owner_id"]}_{photo["id"]}'
                             if num == 2:
                                 break
-                        self.message_send(event.user_id, f'Встречайте {self.questionnaires["name"]} ссылка:vk.com/{self.questionnaires["id"]}', attachment=attachment)
+                        self.message_send(event.user_id, f'Встречайте {worksheet["name"]} ссылка:vk.com/{worksheet["id"]}', attachment=attachment)
                     # запись в базу данных
                         add_user()
                     elif messages == 'пока':
