@@ -28,7 +28,7 @@ class BotInterface():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
                 messages = event.text.lower()
                 context = ''
-                if cotext == "None":
+                if cotext == '':
                     if messages == 'привет':
                         self.params = self.api.get_profile_info(event.user_id)
                         self.message_send(event.user_id, f'привет {self.params["name"]}')
